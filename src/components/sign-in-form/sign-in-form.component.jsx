@@ -21,15 +21,14 @@ const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {  email, password  } = formFields;
 
-    // console.log(formFields);
+
 
     const resetFromFields = () => {
         setFormFields(defaultFormFields);
     }
 
     const signInWithGoogle = async () => {
-        const { user } = await signInWithGooglePopup();
-        await createUserDocumentFromAuth(user)
+     await signInWithGooglePopup();
     }
 
 
@@ -37,8 +36,7 @@ const SignInForm = () => {
         event.preventDefault();
 
         try {
-            const response = await signInAuthUserWithEmailAndPassword(email, password);
-            console.log(response);
+            const {user} = await signInAuthUserWithEmailAndPassword(email, password);
             resetFromFields();
         } catch(error) {
             console.log('AUTH ERROR', error.code, error.message)
@@ -59,7 +57,6 @@ const SignInForm = () => {
     };
 
     const handleChange = (e) => {
-        // e.preventDefault();
         const {name, value} = e.target;
 
         setFormFields({...formFields, [name]: value})
